@@ -1,9 +1,9 @@
 # Source Layout
 
 ## Data
-All data will go into data/ directory, which is NOT in the repository. 
-Since the original dataset is too large to check it, 
-
+<p>All data will go into data/ directory, which is NOT in the repository. 
+Since the original dataset is too large (12GB) to add to teh repo,
+you must downlaod it yourself.</p>
 
 ZACH PROVIDE A LINK HERE.
 
@@ -13,8 +13,9 @@ ZACH PROVIDE A LINK HERE.
     ZACH PROVIDE SHORT INFO HERE.
 
 ## Python third party libraries
-the file requirements.txt contains the libraries required to run the processes.
-Run pip install -r requirements.txt to install all libraries.
+<p>The file requirements.txt contains the libraries required to run the processes.</p>
+
+<p>Run pip install -r requirements.txt to install all libraries.</p>
 
 ## Models
   - model_a/
