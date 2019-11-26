@@ -1,11 +1,11 @@
 # Big5
 
 * Team Members:
-- John Wagener
-- Kwame Sefah
-- Gavin Pedersen 
-- Vong Vang
-- Zach Aaberg
+  - John Wagener
+  - Kwame Sefah
+  - Gavin Pedersen 
+  - Vong Vang
+  - Zach Aaberg
 
 # Overview
 This project is for SEIS 764 - Artificial Intelligence.
