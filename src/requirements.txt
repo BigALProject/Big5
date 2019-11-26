@@ -1,0 +1,4 @@
+tensorflow>=1.15.0
+tensorflow-gpu>=1.15.0
+neural_structured_learning
+jupyter
