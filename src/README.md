@@ -1,10 +1,18 @@
 # Source Layout
 
-## All transformation code should go into
+## Data
+All data will go into data/ directory, which is NOT in the repository. 
+Since the original dataset is too large to check it, 
+
+
+ZACH PROVIDE A LINK HERE.
+
+## Data Transformation
     tranform/
 
 ## Python third party libraries
 the file requirements.txt contains the libraries required to run the processes.
+Run pip install -r requirements.txt to install all libraries.
 
 ## Each model has it's own directory.
   - model_a/
@@ -13,9 +21,4 @@ the file requirements.txt contains the libraries required to run the processes.
   - model_d/
         - Graph Neural Network
  
-## Data
-All data will go into data/ directory. 
-Since the original dataset is too large to check it, 
 
-
-ZACH PROVIDE A LINK HERE.
