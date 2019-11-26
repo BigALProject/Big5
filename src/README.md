@@ -25,11 +25,10 @@ Run pip install -r requirements.txt to install all libraries.
             KWAME/VONG/GAVIN/ZACH CLAIM THIS AND THEN ADD A SHORT STATEMENT
   - model_d/
         - Graph Neural Network
-            Google releases a graph neural netowrk librarby in Sept 2019.
-            https://venturebeat.com/2019/09/03/google-launches-tensorflow-machine-learning-framework-for-graphical-data/
- 
-<p>We have taking the raw data and connnected the houses via 
-               a graph based on lattitude and longitude and distance between houses.  
+            - Google releases a graph neural netowrk librarby in Sept 2019.
+              https://venturebeat.com/2019/09/03/google-launches-tensorflow-machine-learning-framework-for-graphical-data/
+            - <p>We extracted the raw goelocaiton data form the dataset and generated a 
+               graph based on lattitude and longitude and distance between houses.  
                We then ferd that data into the Google Tensorflow library to produce a 
-               model for predicting the damage.</P
+               model for predicting the damage.</p>
 
