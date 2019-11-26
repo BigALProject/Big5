@@ -28,5 +28,8 @@ Run pip install -r requirements.txt to install all libraries.
             Google releases a graph neural netowrk librarby in Sept 2019.
             https://venturebeat.com/2019/09/03/google-launches-tensorflow-machine-learning-framework-for-graphical-data/
  
-            We have taking the raw data and connnected the houses via a graph based on lattitude and longitude and distance between houses.  We then fed that data into the Google Tensorflow library to produce a model for predicting the damage.
+            <p>We have taking the raw data and connnected the houses via 
+               a graph based on lattitude and longitude and distance between houses.  
+               We then ferd that data into the Google Tensorflow library to produce a 
+               model for predicting the damage.</P
 
