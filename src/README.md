@@ -16,7 +16,7 @@ ZACH PROVIDE A LINK HERE.
 the file requirements.txt contains the libraries required to run the processes.
 Run pip install -r requirements.txt to install all libraries.
 
-## Each model has it's own directory.
+## Models
   - model_a/
             KWAME/VONG/GAVIN/ZACH CLAIM THIS AND THEN ADD A SHORT STATEMENT
   - model_b/
