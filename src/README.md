@@ -1,10 +1,10 @@
-All transformation code should go into
+# All transformation code should go into
     tranform/
 
-Each model has it's own directory.
-  model_a/
-  model_b/
-  model_c/
-  model_d/
-        Graph Neural Network
+# Each model has it's own directory.
+  - model_a/
+  - model_b/
+  - model_c/
+  - model_d/
+        - Graph Neural Network
   
