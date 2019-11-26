@@ -3,6 +3,9 @@
 ## All transformation code should go into
     tranform/
 
+## Python third party libraries
+the file requirements.txt contains the libraries required to run the processes.
+
 ## Each model has it's own directory.
   - model_a/
   - model_b/
