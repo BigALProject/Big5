@@ -139,7 +139,7 @@ class ImageChipper():
                     copyfile(masking_path, combo_output_pre)
 
 if __name__ == "__main__":
-    dbconn =  "host=ai-project-free.crx15vrrp87g.us-east-2.rds.amazonaws.com dbname=xview2 user=viewer password=viewer port=5431" # os.getenv('pg_spa') *** Using an environment variable instead.
+    dbconn =  os.getenv('xview2_pg') 
 
     image_path_1 = r'C:\Users\Zerg\AI_Project\data\tier1_tier2\train\images'
     mask_input_path_1 = r'C:\Users\Zerg\AI_Project\data\tier1_tier2\masks_combo'
