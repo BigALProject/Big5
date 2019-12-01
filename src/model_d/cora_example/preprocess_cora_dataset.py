@@ -72,9 +72,9 @@ FLAGS = flags.FLAGS
 FLAGS.showprefixforinfo = False
 
 flags.DEFINE_string(
-    'input_cora_content', '/tmp/cora/cora.content',
+    'input_cora_content', '../../../data/cora/cora/cora.content',
     """Input file for Cora content that contains ID, words and labels.""")
-flags.DEFINE_string('input_cora_graph', '/tmp/cora/cora.cites',
+flags.DEFINE_string('input_cora_graph', '../../../data/cora/cora/cora.cites',
                     """Input file for Cora citation graph in TSV format.""")
 flags.DEFINE_integer(
     'max_nbrs', None,
@@ -84,9 +84,9 @@ flags.DEFINE_float(
     """The percentage of examples to be created as training data. The rest
     are created as test data.""")
 flags.DEFINE_string(
-    'output_train_data', '/tmp/cora/train_merged_examples.tfr',
+    'output_train_data', '../../../data/cora/cora/train_merged_examples.tfr',
     """Output file for training data merged with graph in TF Record format.""")
-flags.DEFINE_string('output_test_data', '/tmp/cora/test_examples.tfr',
+flags.DEFINE_string('output_test_data', '../../../data/cora/cora/test_examples.tfr',
                     """Output file for test data in TF Record format.""")
 
 
@@ -236,6 +236,8 @@ def _join_examples(seed_exs, nbr_exs, graph, max_nbrs):
       for (feature_name, feature_val) in six.iteritems(nbr_ex.features.feature):
         new_feature = merged_ex.features.feature[prefix + feature_name]
         new_feature.CopyFrom(feature_val)
+
+    #print("------------------------\n" + str(merged_ex) + "oooooooooooooooooooooooo\n")
     return merged_ex
 
   start_time = time.time()
