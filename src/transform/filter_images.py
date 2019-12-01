@@ -1,8 +1,12 @@
 """
   filter_images.py
   SEIS764 - Artificial Intelligence
+  John Wagener, Kwame Sefah, Gavin Pedersen, Vong Vang, Zach Aaberg
 
   Takes an input directory of images and filters based on filename and resulting mask size.
+  copies matching files into results directory that is used in the next step to generate mappings.
+
+  Next: run preprocess_xview_dataset_from_raw.py
 """
 import os
 import re
@@ -16,12 +20,13 @@ mask_image_location = "../../data/maskedImage/"
 # Cache file
 cache_file = "data.cache"
 # Filter for destruction type.  Set to "" for all destruction types.
-filter_destruction_type = "tornado"
+filter_destruction_type = "hurricane-harvey_00000008"
+#filter_destruction_type = "2a5693c7-e9b1-4ec8-9491-d3fca6beba79"
 # Minimum footprint - too small of images will likely cause issues, so lets skip them.
 # This is just used to find really small footprints.  Use filter_min_footprint instead.
-notify_min_footprint = 50
+notify_min_footprint = 0
 # Minimum footprint for dataset.
-filter_min_footprint = 3000
+filter_min_footprint = 0
 # Maximum footprint for dataset.
 filter_max_footprint = 9999999
 # Location of the output directory for filtered images
@@ -36,6 +41,7 @@ def extract_non_empty_pixel_count(filename):
     '''
     image = cv2.imread(filename, 0)
     count = cv2.countNonZero(image)
+    print(image.shape)
     return count
 
 
@@ -84,10 +90,9 @@ if __name__ == "__main__":
     filtered_items = []
     for item in cache_info:
         if item[0] == 0:
-            print("ERROR: image does not contain any data->" + str(item[0]) + " --> " + item[1])
+            print("WARN: image does not contain any data->" + str(item[0]) + " --> " + item[1])
         small_items.append(item)
 
-        # Filter out images of only a certain size and destruction type
         if (int(item[0]) >= filter_min_footprint) and (int(item[0]) <= filter_max_footprint) and \
                 (filter_destruction_type in item[1]):
             filtered_items.append(item)
@@ -104,7 +109,7 @@ if __name__ == "__main__":
     total_images = 0
     for filtered_item in filtered_items:
         outfile = re.sub(".*/maskedImage/", output_dir, filtered_item[1])
-        print("Copying " + filtered_item[1] + " to " + outfile)
+        #print("Copying " + filtered_item[1] + " to " + outfile)
         shutil.copyfile(filtered_item[1], outfile)
         total_images = total_images + 1
 
