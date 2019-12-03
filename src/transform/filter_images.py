@@ -20,8 +20,17 @@ mask_image_location = "../../data/maskedImage/"
 # Cache file
 cache_file = "data.cache"
 # Filter for destruction type.  Set to "" for all destruction types.
-filter_destruction_type = "hurricane-harvey_00000008"
-#filter_destruction_type = "2a5693c7-e9b1-4ec8-9491-d3fca6beba79"
+
+# Choose a filter"
+# All images
+#filter_destruction_type = ".*"
+# All hurricane harvey in one image
+#filter_destruction_type = '.*hurricane-harvey_00000008.*'
+# All hurricane harvey with at least  destroyed building
+filter_destruction_type = ".*hurricane-harvey_00000(069|070|071|072|077|088|091|099|100|109|114|123|126|128|129|130|141|145|146|177|207|221|222|224|232|235|244|248|251|264|275|277|280|285|289|291|300|309|316|319|325|345|347|356|358|361|365|369|387|391|392|393|398|406|408|411|427|434|437|462|463|470|472|473|481|484|486|491|493|496|499|500|511|512|521).*"
+# All hurricane harvey
+#filter_destruction_type = ".*hurricane-harvey.*"
+
 # Minimum footprint - too small of images will likely cause issues, so lets skip them.
 # This is just used to find really small footprints.  Use filter_min_footprint instead.
 notify_min_footprint = 0
@@ -94,7 +103,7 @@ if __name__ == "__main__":
         small_items.append(item)
 
         if (int(item[0]) >= filter_min_footprint) and (int(item[0]) <= filter_max_footprint) and \
-                (filter_destruction_type in item[1]):
+                re.match(filter_destruction_type, item[1]):
             filtered_items.append(item)
 
     # print("---Images with *really* small footprints---")
