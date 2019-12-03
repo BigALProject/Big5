@@ -87,7 +87,7 @@ flags.DEFINE_string('input_xview_graph', '../../data/filtered_images_for_trainin
                     """Input file for XView neighborhood graph in TSV format.""")
 # JDW Statically set the max_nbrs.  I set to 4 because there are some missing images.
 flags.DEFINE_integer(
-    'max_nbrs', 1,
+    'max_nbrs', 8,
     'The maximum number of neighbors to merge into each labeled Example.')
 flags.DEFINE_float(
     'train_percentage', 0.8,
@@ -109,7 +109,8 @@ def _bytes_feature(value):
 
 
 def parse_xview_content(in_file, train_percentage):
-    """Converts the Xview content (in TSV) to `tf.train.Example` instances.
+    """
+    Converts the Xview content (in TSV) to `tf.train.Example` instances.
 
     This function parses Xview content (in TSV), converts string labels to integer
     label IDs, randomly splits the data into training and test sets, and returns
@@ -133,6 +134,14 @@ def parse_xview_content(in_file, train_percentage):
         'major-damage': 2,
         'minor-damage': 3,
     }
+
+    # Determine how many we need to process
+    total_samples = 0
+    with open(in_file, 'rU') as xview_content:
+        for line in xview_content:
+            total_samples = total_samples + 1
+    xview_content.close()
+
     # Fixes the random seed so the train/test split can be reproduced.
     random.seed(1)
     train_examples = {}
@@ -141,30 +150,38 @@ def parse_xview_content(in_file, train_percentage):
     with open(in_file, 'rU') as xview_content:
         for line in xview_content:
             if counter % 100 == 0:
-                print("Processed=" + str(counter))
+                print("Processed=" + str(counter) + "/" + str(total_samples))
             counter = counter + 1
             entries = line.rstrip('\n').split(split_char)
-            # entries contains [ID, image] are 0-255 values.
+            # entries contain [ID, image] where image is a sequence of values 0-255.
             # print(entries)
-            image = np.array(Image.open(entries[1]))
-            image_raw = image.tostring()
+
+            # Disabled this because we only need filenames now
+            #image = np.array(Image.open(entries[1]))
+            #image_raw = image.tostring()
+            #image_non_zero = np.count_nonzero(image)
+            # Verify image size, report errors if something doesnt match.
+            #if image.shape[0] != 1024 or image.shape[1] != 1024:
+            #    raise Exception("Image size is incorrect")
+            #if 3145728 != len(image_raw):
+            #    raise Exception("Image size is incorrect")
+
             # JDW Added these features
+            # Seem to want to be alphabetical when written.
             xview_content_features = {
                 #'image_x': _int64_feature(image.shape[0]),
                 #'image_y': _int64_feature(image.shape[1]),
-                #'image_filename': _bytes_feature(entries[1].encode('utf-8')),
                 'label': _int64_feature(label_index[entries[-1]]),
-                # JDW
+                # TODO JDW
+                #'image': _bytes_feature(image_raw[0:9]),
                 #'image': _bytes_feature(image_raw),
-                'image': _bytes_feature(entries[1].encode('utf-8')),
+                'image_filename': _bytes_feature(entries[1].encode('utf-8')),
+                #'image_non_zero': _int64_feature(image_non_zero),
+                #'image': _bytes_feature(entries[1].encode('utf-8')),
             }
             example_features = tf.train.Example(features=tf.train.Features(feature=xview_content_features))
 
-            # JDW: Verify image size, report errors if something doesnt match.
-            if image.shape[0] != 1024 or image.shape[1] != 1024:
-                raise Exception("Image size is incorrect")
-            if 3145728 != len(image_raw):
-                raise Exception("Image size is incorrect")
+
 
             # Save the house_id to the train or test dataset.
             example_id = entries[0]
@@ -237,11 +254,13 @@ def _join_examples(seed_exs, nbr_exs, graph, max_nbrs):
         # Downstream is picky about getting full datasets.
         # We could pad this with empty images if we wanted.
         if len(result) < FLAGS.max_nbrs:
-            raise Exception("ERROR: less than " + str(FLAGS.max_nbrs) + " --> " + seed_id)
+            print("WARN: Note enough neighbors (" + str(len(result)) + "/" + str(FLAGS.max_nbrs) + " for seed_id=" + seed_id)
+            #raise Exception("ERROR: less than " + str(FLAGS.max_nbrs) + " --> " + seed_id)
         return result
 
     def merge_examples(seed_ex, nbr_wt_ex_list):
-        """Merges neighbor Examples into the given seed Example `seed_ex`.
+        """
+        Merges neighbor Examples into the given seed Example `seed_ex`.
 
         Args:
           seed_ex: A labeled Example.
@@ -254,14 +273,16 @@ def _join_examples(seed_exs, nbr_exs, graph, max_nbrs):
           into `seed_ex`. See the `join()` description above for how the neighbor
           features are named in the result.
         """
+        #global outfile
+
         # Make a deep copy of the seed Example to augment.
         merged_ex = tf.train.Example()
         merged_ex.CopyFrom(seed_ex)
 
         # Add a feature for the number of neighbors.
         # JDW Disabled this
-        #merged_ex.features.feature['NL_num_nbrs'].int64_list.value.append(
-        #    len(nbr_wt_ex_list))
+        merged_ex.features.feature['NL_num_nbrs'].int64_list.value.append(
+            len(nbr_wt_ex_list))
 
         # Enumerate the neighbors, and merge in the features of each.
         for index, (nbr_wt, nbr_id) in enumerate(nbr_wt_ex_list):
@@ -272,20 +293,24 @@ def _join_examples(seed_exs, nbr_exs, graph, max_nbrs):
             # Copy each of the neighbor Examples features, prefixed with 'prefix'.
             nbr_ex = lookup_ex(nbr_id)
             for (feature_name, feature_val) in six.iteritems(nbr_ex.features.feature):
-                # JDW: Fill process both label an image
-                print(prefix + feature_name)
-                print(feature_val)
                 new_feature = merged_ex.features.feature[prefix + feature_name]
                 new_feature.CopyFrom(feature_val)
 
-        print("------------------------\n" + str(merged_ex) + "oooooooooooooooooooooooo\n")
+        #outfile.write("------------------------\n" + str(merged_ex) + "oooooooooooooooooooooooo\n")
         return merged_ex
 
     start_time = time.time()
     logging.info(
         'Joining seed and neighbor tf.train.Examples with graph edges...')
+
+    #counter = 0
     for (seed_id, seed_ex) in six.iteritems(seed_exs):
         yield merge_examples(seed_ex, join_seed_to_nbrs(seed_id))
+        # JDW For testing smaller sets
+        #if counter > 0:
+        #   break
+        #counter = counter + 1
+
     logging.info(
         'Done creating and writing %d merged tf.train.Examples (%.2f seconds).',
         len(seed_exs), (time.time() - start_time))
@@ -328,7 +353,13 @@ def main(unused_argv):
                  (time.time() - start_time) / 60.0)
 
 
+
+
 if __name__ == '__main__':
+    # For debug
+    # outfile = open("outfile.txt", "w")
+
     # Ensures TF 2.0 behavior even if TF 1.X is installed.
     tf.compat.v1.enable_v2_behavior()
     app.run(main)
+    #outfile.close()

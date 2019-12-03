@@ -54,7 +54,7 @@ output_content_counter = 0
 output_neighborhood_counter = 0
 output_content = open(filename_content, "w")
 output_neighborhood = open(filename_neighborhood, "w")
-print("Walking image directory to see what mappings we need to gneerate...")
+print("Walking image directory to see what mappings we need to generate...")
 for (root, dirs, files) in os.walk(mask_image_location, topdown=True):
     for name in files:
         filename = os.path.join(root, name)
