@@ -1,5 +1,6 @@
 /venv_36/
 /data/
+/src/transform/data.cache
 /src/model_d/.ipynb_checkpoints/
 /.idea
 .idea
