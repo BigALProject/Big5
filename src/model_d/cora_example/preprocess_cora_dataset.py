@@ -237,7 +237,8 @@ def _join_examples(seed_exs, nbr_exs, graph, max_nbrs):
         new_feature = merged_ex.features.feature[prefix + feature_name]
         new_feature.CopyFrom(feature_val)
 
-    #print("------------------------\n" + str(merged_ex) + "oooooooooooooooooooooooo\n")
+    #tf.print("------------------------\n" + str(merged_ex['features']) + "oooooooooooooooooooooooo\n")
+    outfile.write("------------------------\n" + str(merged_ex) + "oooooooooooooooooooooooo\n")
     return merged_ex
 
   start_time = time.time()
@@ -286,5 +287,10 @@ def main(unused_argv):
 
 if __name__ == '__main__':
   # Ensures TF 2.0 behavior even if TF 1.X is installed.
+  # For debug
+  outfile = open("outfile.txt", "w")
+
   tf.compat.v1.enable_v2_behavior()
   app.run(main)
+
+  outfile.close()

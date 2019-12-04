@@ -161,7 +161,7 @@ if __name__ == '__main__':
         for i in range(HPARAMS.num_neighbors):
             print("  ---- neighbor i=" + str(i))
             prefix = '{}{}_'.format(NBR_FEATURE_PREFIX, i)
-            print('    Neighbor inputs:', feature_batch[prefix + "image_filename"])
+            print('    Neighbor inputs:[' + prefix + "image_filename=", feature_batch[prefix + "image_filename"])
             print('    Neighbor weights:',
                   tf.reshape(feature_batch[prefix + "weight"], [-1]))
             print('    Neighbor Labels:', label_batch)
