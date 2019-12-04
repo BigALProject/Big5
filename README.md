@@ -14,3 +14,6 @@ The goal of the project is to use satelite images pre and post natural disaster 
 
 NEED VOLUNTEER TO COMPLETE THIS SUMMARY.
 
+Setup:
+- Load images
+
