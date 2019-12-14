@@ -15,7 +15,7 @@ The goal of the project is to use satelite images pre and post natural disaster 
 we took the images from https://xview2.org/dataset and pre-processed them by applying a mask to the images to isolate the houses.
 Then we fed those images into a variety of AI algorithms including CNN, VG16, Graph, and Google.
 
-General process (see user manual):
+General process (see user manual for complete details):
 - Download bulk images from https://xview2.org/dataset
 -- Original images from https://xview2.org/download-links.  You may need to sign up to get access.  THis contains the raw images.
     Download training set (images + labels)
