@@ -17,6 +17,13 @@ Then we fed those images into a variety of AI algorithms including CNN, VG16, Gr
 
 General process (see user manual):
 - Download bulk images from https://xview2.org/dataset
+-- Original images from https://xview2.org/download-links.  You may need to sign up to get access.  THis contains the raw images.
+    Download training set (images + labels)
+    SHA1: 8298416c6f2c3bff28f6df55ffe7ff4a22bfc457
+    Download additional Tier3 training data (images + labels)
+    SHA1: 5bf6aaf8a71980b633fb4661776a99a200891de5
+    Download test set (images)
+    SHA1: fedae3b00b7ce47430b4850768e34aa449f0241d
 - Transform images by using mask and filtering out each house.
 - Pass images into AI.
 
