@@ -12,8 +12,8 @@ This project is for SEIS 764 - Artificial Intelligence.
 
 The goal of the project is to use satelite images pre and post natural disaster to automatically classify the damage done to a structure.
 
-we took the images from https://xview2.org/dataset and pre-processed them by applying a mask to the images to isolate the houses.
-Then we fed those images into a variety of AI algorithms including CNN, VG16, Graph, and Google.
+The team took the images from https://xview2.org/dataset and pre-processed them by applying a mask to the images to isolate the houses.
+The images were then variety of AI algorithms including CNN, VGG16, Graph, and Google AutoML.
 
 General process (see user manual for complete details):
 - Download bulk images from https://xview2.org/dataset
