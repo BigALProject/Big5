@@ -5,6 +5,6 @@ jupyter==1.0.0
 pillow==6.2.1
 psycopg2==2.8.3
 pandas==0.25.3
-opencv-python==3.4.1.15
+opencv-python==4.2.0.32
 Keras==2.3.1
 matplotlib==3.1.2
